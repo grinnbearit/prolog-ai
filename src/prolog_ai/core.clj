@@ -1,1 +1,0 @@
-(ns prolog-ai.core)
