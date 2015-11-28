@@ -1,6 +1,6 @@
 (ns prolog-ai.introduction-to-prolog
   (:refer-clojure :exclude [==])
-  (:require [clojure.core.logic :refer [== run* s# u# run fresh !=]]
+  (:require [clojure.core.logic :refer [== run* s# u# run fresh != conde]]
             [clojure.core.logic.pldb :as db]
             [midje.sweet :refer :all]))
 
@@ -308,3 +308,20 @@
    (run* [x]
      (aunto :liz x)))
  => [:pat :ann])
+
+;;; Recursive Rules
+
+(defn predecessoro
+  [x y]
+  (conde
+   [(parento x y)]
+   [(fresh [z]
+      (parento x z)
+      (predecessoro z y))]))
+
+(facts
+
+ (db/with-db plaidb-2
+   (run* [x]
+     (predecessoro :pam x)))
+ => [:bob :pat :ann :jim])
